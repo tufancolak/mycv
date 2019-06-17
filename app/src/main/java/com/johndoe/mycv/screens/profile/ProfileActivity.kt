@@ -1,15 +1,19 @@
 package com.johndoe.mycv.screens.profile
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.johndoe.mycv.R
 import com.johndoe.mycv.screens.education.EducationActivity
 import com.johndoe.mycv.screens.work.WorkExperienceActivity
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ProfileActivity : AppCompatActivity() {
+
+    // Lazy Inject ViewModel
+    val viewModel: ProfileViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
