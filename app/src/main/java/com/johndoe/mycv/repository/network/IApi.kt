@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 interface IApi {
 
     @GET("resume")
-    fun getVehicles(): Observable<Resume>
+    fun getResume(): Observable<Resume>
 
 
     companion object {

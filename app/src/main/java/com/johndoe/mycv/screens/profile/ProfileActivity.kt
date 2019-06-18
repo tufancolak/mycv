@@ -3,11 +3,13 @@ package com.johndoe.mycv.screens.profile
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.johndoe.mycv.R
 import com.johndoe.mycv.screens.education.EducationActivity
 import com.johndoe.mycv.screens.work.WorkExperienceActivity
+import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.component_profile.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ProfileActivity : AppCompatActivity() {
@@ -19,18 +21,42 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        // Temporary states
-        this.findViewById<View>(R.id.view_profile).visibility= View.VISIBLE
-        this.findViewById<View>(R.id.view_loading).visibility= View.INVISIBLE
-        this.findViewById<View>(R.id.view_error).visibility= View.INVISIBLE
+        bindViews()
+
+
+        observe()
+    }
+
+    // Bind views
+    private fun bindViews() {
 
         // Temporary actions
-        this.findViewById<Button>(R.id.button_work).setOnClickListener {
+        button_work.setOnClickListener {
             val intent = Intent(this@ProfileActivity, WorkExperienceActivity::class.java)
-            startActivity(intent) }
+            startActivity(intent)
+        }
 
-        this.findViewById<Button>(R.id.button_education).setOnClickListener {
+        button_education.setOnClickListener {
             val intent = Intent(this@ProfileActivity, EducationActivity::class.java)
-            startActivity(intent) }
+            startActivity(intent)
+        }
+    }
+
+    // Observe ViewModel
+    private fun observe() {
+
+        // Observe View states
+
+        viewModel.observeErrorView().observe(this, Observer<Boolean> { value ->
+            view_error.visibility = if (value == true) View.VISIBLE else View.INVISIBLE
+        })
+
+        viewModel.observeProfileView().observe(this, Observer<Boolean> { value ->
+            view_profile.visibility = if (value == true) View.VISIBLE else View.INVISIBLE
+        })
+
+        viewModel.observeProgressView().observe(this, Observer<Boolean> { value ->
+            view_loading.visibility = if (value == true) View.VISIBLE else View.INVISIBLE
+        })
     }
 }
