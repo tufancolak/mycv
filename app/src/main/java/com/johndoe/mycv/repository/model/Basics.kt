@@ -3,7 +3,6 @@ package com.johndoe.mycv.repository.model
 data class Basics(
     val email: String,
     val label: String,
-    val location: Location,
     val name: String,
     val phone: String,
     val picture: String,

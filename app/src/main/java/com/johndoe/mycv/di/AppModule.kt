@@ -16,7 +16,13 @@ val appModule = module {
     }
 
     // ViewModel
-    viewModel { EducationViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
-    viewModel { WorkExperienceViewModel(get()) }
+    viewModel {
+        ProfileViewModel(get())
+    }
+    viewModel {
+        EducationViewModel(get())
+    }
+    viewModel {
+        WorkExperienceViewModel(get())
+    }
 }

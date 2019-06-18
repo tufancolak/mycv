@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.johndoe.mycv.R
+import com.johndoe.mycv.repository.model.Resume
 import com.johndoe.mycv.screens.education.EducationActivity
 import com.johndoe.mycv.screens.work.WorkExperienceActivity
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -22,9 +23,8 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         bindViews()
-
-
         observe()
+        viewModel.retrieveData()
     }
 
     // Bind views
@@ -57,6 +57,13 @@ class ProfileActivity : AppCompatActivity() {
 
         viewModel.observeProgressView().observe(this, Observer<Boolean> { value ->
             view_loading.visibility = if (value == true) View.VISIBLE else View.INVISIBLE
+        })
+
+        viewModel.observeResumeData().observe(this, Observer<Resume> { value ->
+            textView_name.text = value.basics.name
+            textView_email.text = value.basics.email
+            textView_phone.text = value.basics.phone
+            textView_summary.text = value.basics.summary
         })
     }
 }

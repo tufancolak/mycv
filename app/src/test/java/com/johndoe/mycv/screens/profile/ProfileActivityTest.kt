@@ -1,14 +1,20 @@
 package com.johndoe.mycv.screens.profile
 
+import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.rule.ActivityTestRule
+import com.johndoe.mycv.R
+import com.johndoe.mycv.repository.IRepository
 import com.johndoe.mycv.repository.Repository
+import com.johndoe.mycv.repository.model.Resume
 import com.johndoe.mycv.screens.education.EducationActivity
 import com.johndoe.mycv.screens.work.WorkExperienceActivity
 import com.johndoe.mycv.testutil.RobolectricTestConfig
-import junit.framework.Assert.assertEquals
+import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -23,7 +29,7 @@ class ProfileActivityTest : RobolectricTestConfig() {
 
     lateinit var mockViewModel: ProfileViewModel
     lateinit var mockRepository: Repository
-    lateinit var activity: ProfileActivity
+    private lateinit var activity: ProfileActivity
 
     @get:Rule
     val rule = ActivityTestRule(ProfileActivity::class.java)
@@ -31,6 +37,15 @@ class ProfileActivityTest : RobolectricTestConfig() {
     @Before
     fun setup() {
         mockViewModel = Mockito.mock(ProfileViewModel::class.java)
+        mockRepository = Mockito.mock(Repository::class.java)
+
+        val resume = MutableLiveData<Resume>()
+        resume.value = IRepository.resumeData
+
+        whenever(mockViewModel.observeResumeData()).thenReturn(resume)
+        whenever(mockViewModel.observeErrorView()).thenReturn(MutableLiveData())
+        whenever(mockViewModel.observeProfileView()).thenReturn(MutableLiveData())
+        whenever(mockViewModel.observeProgressView()).thenReturn(MutableLiveData())
 
         loadKoinModules(module {
             single { mockRepository }
@@ -45,19 +60,35 @@ class ProfileActivityTest : RobolectricTestConfig() {
 
     @Test
     fun whenWorkExperienceViewClickedWorkExperienceActivityWillLaunch() {
+
         val shadowActivity = shadowOf(activity)
 
-        onView(ViewMatchers.withId(com.johndoe.mycv.R.id.button_work)).perform(ViewActions.click())
+        onView(withId(R.id.button_work)).perform(ViewActions.click())
 
-        assertEquals(WorkExperienceActivity::class.java!!.getName(), shadowActivity.nextStartedActivity.component.className)
+        assertEquals(
+            WorkExperienceActivity::class.java!!.name,
+            shadowActivity.nextStartedActivity.component.className
+        )
     }
 
     @Test
     fun whenEducationViewClickedEducationActivityWillLaunch() {
+
         val shadowActivity = shadowOf(activity)
 
-        onView(ViewMatchers.withId(com.johndoe.mycv.R.id.button_education)).perform(ViewActions.click())
+        onView(withId(R.id.button_education)).perform(ViewActions.click())
 
-        assertEquals(EducationActivity::class.java!!.getName(), shadowActivity.nextStartedActivity.component.className)
+        assertEquals(
+            EducationActivity::class.java!!.name,
+            shadowActivity.nextStartedActivity.component.className
+        )
+    }
+
+    @Test
+    fun whenDataRetrievedNameWillBeAvailable() {
+
+        val expected = IRepository.resumeData.basics.name
+
+        onView(withId(R.id.textView_name)).check(matches(withText(expected)));
     }
 }

@@ -3,9 +3,11 @@ package com.johndoe.mycv.screens.education
 import androidx.test.rule.ActivityTestRule
 import com.johndoe.mycv.repository.Repository
 import com.johndoe.mycv.testutil.RobolectricTestConfig
+import junit.framework.TestCase.assertNotNull
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
@@ -37,5 +39,10 @@ class EducationActivityTest : RobolectricTestConfig() {
 
     @After
     fun tearDown() {
+    }
+
+    @Test
+    fun activityallive(){
+        assertNotNull(activity)
     }
 }

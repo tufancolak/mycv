@@ -73,6 +73,16 @@ class ProfileViewModelTest : JunitTestConfig() {
     }
 
     @Test
+    fun whenThereIsNoErrorInGettingDataObserveProgressViewWillBeFalse() {
+        val expected = false
+        whenever(repository?.getData()).thenReturn(Observable.just((resume)))
+
+        viewModel?.retrieveData()
+
+        assertEquals( expected, viewModel?.observeProgressView()?.value)
+    }
+
+    @Test
     fun whenThereIsAnErrorInGettingDataObserveErrorViewWillBeTrue() {
         val expected = true
         whenever(repository?.getData()).thenReturn(Observable.error(Throwable()))
@@ -90,5 +100,15 @@ class ProfileViewModelTest : JunitTestConfig() {
         viewModel?.retrieveData()
 
         assertEquals( expected, viewModel?.observeProfileView()?.value)
+    }
+
+    @Test
+    fun whenThereIsAnErrorInGettingDataObserveProgressViewWillBeFalse() {
+        val expected = false
+        whenever(repository?.getData()).thenReturn(Observable.error(Throwable()))
+
+        viewModel?.retrieveData()
+
+        assertEquals( expected, viewModel?.observeProgressView()?.value)
     }
 }
