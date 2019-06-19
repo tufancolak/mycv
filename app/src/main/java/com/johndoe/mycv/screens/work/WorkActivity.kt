@@ -43,7 +43,7 @@ class WorkActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             android.R.id.home -> {
                 NavUtils.navigateUpFromSameTask(this)
                 return true

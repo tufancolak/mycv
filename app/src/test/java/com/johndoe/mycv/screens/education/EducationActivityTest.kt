@@ -1,48 +1,55 @@
 package com.johndoe.mycv.screens.education
 
+import android.content.Intent
 import androidx.test.rule.ActivityTestRule
-import com.johndoe.mycv.repository.Repository
+import com.johndoe.mycv.repository.MockRepository
+import com.johndoe.mycv.screens.education.glue.EducationViewModelFactory
 import com.johndoe.mycv.testutil.RobolectricTestConfig
+import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.android.viewmodel.dsl.viewModel
-import org.koin.core.context.loadKoinModules
-import org.koin.dsl.module
 import org.mockito.Mockito
 
 
 class EducationActivityTest : RobolectricTestConfig() {
 
+
     lateinit var mockViewModel: EducationViewModel
-    lateinit var mockRepository: Repository
-    lateinit var activity: EducationActivity
+    private lateinit var activity: EducationActivity
 
     @get:Rule
-    val rule = ActivityTestRule(EducationActivity::class.java)
+    val rule = ActivityTestRule(EducationActivity::class.java,true,false)
+
 
     @Before
     fun setup() {
         mockViewModel = Mockito.mock(EducationViewModel::class.java)
 
-        loadKoinModules(module {
-            single { mockRepository }
-            viewModel {
-                mockViewModel
-            }
-        })
+        whenever(mockViewModel.getEducationList()).thenReturn(MockRepository().getEducation())
+        EducationViewModelFactory.setMockViewModel(mockViewModel)
+        activity = rule.launchActivity(Intent())
 
-        activity = rule.activity
     }
 
     @After
     fun tearDown() {
+        rule.finishActivity()
+        EducationViewModelFactory.setMockViewModel(null)
     }
 
     @Test
-    fun activityallive(){
+    fun whenActivityStartedEverythingShouldBeFine() {
         assertNotNull(activity)
+    }
+
+    @Test
+    fun whenActivityStartedDataOnRecycleViewShouldBeCorrect() {
+
+        val expected = MockRepository().getResume().education.size
+
+        assertEquals(expected,activity.educationRecyclerView.adapter?.itemCount)
     }
 }

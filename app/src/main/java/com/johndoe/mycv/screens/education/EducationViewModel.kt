@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import com.johndoe.mycv.repository.IRepository
 import com.johndoe.mycv.repository.model.Education
 
-class EducationViewModel(val repository: IRepository) : ViewModel() {
+class EducationViewModel(val repository: IRepository) : ViewModel(), EducationContract {
 
-    fun getEducationList() : ArrayList<Education> {
+    override fun getEducationList(): ArrayList<Education> {
         return repository.getEducation()
     }
 }

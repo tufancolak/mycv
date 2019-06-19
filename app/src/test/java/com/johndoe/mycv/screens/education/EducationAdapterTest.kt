@@ -2,7 +2,7 @@ package com.johndoe.mycv.screens.education
 
 import android.widget.FrameLayout
 import androidx.test.core.app.ApplicationProvider
-import com.johndoe.mycv.repository.IRepository
+import com.johndoe.mycv.repository.MockRepository
 import com.johndoe.mycv.repository.model.Education
 import com.johndoe.mycv.testutil.RobolectricTestConfig
 import junit.framework.TestCase.assertEquals
@@ -49,6 +49,6 @@ class EducationAdapterTest : RobolectricTestConfig() {
 
     // Get the mock data
     fun getMockEducation(): ArrayList<Education> {
-        return ArrayList(IRepository.resumeData.education)
+        return MockRepository().getEducation()
     }
 }

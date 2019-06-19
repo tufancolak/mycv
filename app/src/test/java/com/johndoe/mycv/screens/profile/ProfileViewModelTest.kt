@@ -111,4 +111,15 @@ class ProfileViewModelTest : JunitTestConfig() {
 
         assertEquals( expected, viewModel?.observeProgressView()?.value)
     }
+
+
+    @Test
+    fun whenThereIsNoErrorInGettingDataObserveResumeDataViewWillBeTheOneSent() {
+        val expected = resume
+        whenever(repository?.getData()).thenReturn(Observable.just((expected)))
+
+        viewModel?.retrieveData()
+
+        assertEquals( expected, viewModel?.observeResumeData()?.value)
+    }
 }

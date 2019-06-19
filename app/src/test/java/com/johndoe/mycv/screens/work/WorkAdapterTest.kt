@@ -2,7 +2,7 @@ package com.johndoe.mycv.screens.work
 
 import android.widget.FrameLayout
 import androidx.test.core.app.ApplicationProvider
-import com.johndoe.mycv.repository.IRepository
+import com.johndoe.mycv.repository.MockRepository
 import com.johndoe.mycv.repository.model.Work
 import com.johndoe.mycv.testutil.RobolectricTestConfig
 import junit.framework.TestCase
@@ -48,6 +48,6 @@ class WorkAdapterTest : RobolectricTestConfig() {
 
     // Get the mock data
     fun getMockWork(): ArrayList<Work> {
-        return ArrayList(IRepository.resumeData.work)
+        return MockRepository().getWork()
     }
 }
