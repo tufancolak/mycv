@@ -7,9 +7,11 @@ interface IRepository {
 
     fun getData(): Observable<Resume>
 
-    fun getWork(): Observable<List<Work>>
+    fun getEducation(): ArrayList<Education>
 
-    fun getEducation(): Observable<List<Education>>
+    fun getWork(): ArrayList<Work>
+
+    fun storeResume(resume: Resume)
 
     /**
      * Object created for development

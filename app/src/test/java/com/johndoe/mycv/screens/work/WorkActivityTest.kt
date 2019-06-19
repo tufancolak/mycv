@@ -1,0 +1,42 @@
+package com.johndoe.mycv.screens.work
+
+import androidx.test.rule.ActivityTestRule
+import com.johndoe.mycv.repository.Repository
+import com.johndoe.mycv.testutil.RobolectricTestConfig
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.core.context.loadKoinModules
+import org.koin.dsl.module
+import org.mockito.Mockito
+
+class WorkActivityTest : RobolectricTestConfig() {
+
+    lateinit var mockViewModel: WorkViewModel
+    lateinit var mockRepository: Repository
+    lateinit var activity: WorkActivity
+
+    @get:Rule
+    val rule = ActivityTestRule(WorkActivity::class.java)
+
+    @Before
+    fun setup() {
+        mockViewModel = Mockito.mock(WorkViewModel::class.java)
+
+        loadKoinModules(module {
+            single { mockRepository }
+            viewModel {
+                mockViewModel
+            }
+        })
+
+        activity = rule.activity
+    }
+
+    @After
+    fun tearDown() {
+    }
+
+
+}

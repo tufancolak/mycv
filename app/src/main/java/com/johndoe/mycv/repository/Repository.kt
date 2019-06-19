@@ -3,19 +3,35 @@ package com.johndoe.mycv.repository
 import com.johndoe.mycv.repository.model.Education
 import com.johndoe.mycv.repository.model.Resume
 import com.johndoe.mycv.repository.model.Work
+import com.johndoe.mycv.repository.network.IApi
 import io.reactivex.Observable
 
-class Repository : IRepository {
+object Repository : IRepository {
+
+
+    // Used for saving it in the memory
+    private lateinit var resume: Resume
+
+
+    private val api by lazy {
+        IApi.create()
+    }
+
     override fun getData(): Observable<Resume> {
-        return Observable.just(IRepository.resumeData)
+        return api.getResume()
     }
 
-    override fun getWork(): Observable<List<Work>> {
-        return Observable.just(IRepository.resumeData.work)
+    override fun getEducation(): ArrayList<Education> {
+        return ArrayList(this.resume.education)
     }
 
-    override fun getEducation(): Observable<List<Education>> {
-        return Observable.just(IRepository.resumeData.education)
+    override fun getWork(): ArrayList<Work> {
+        return ArrayList(this.resume.work)
     }
+
+    override fun storeResume(resume: Resume) {
+        this.resume = resume
+    }
+
 
 }

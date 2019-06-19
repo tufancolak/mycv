@@ -43,7 +43,7 @@ interface IApi {
         }
 
         fun createBaseUrl(): String {
-            return "http://private-6d86b9-vehicles5.apiary-mock.com/"
+            return "http://private-f2508-tufancolak.apiary-mock.com/"
         }
 
         fun create(): IApi {

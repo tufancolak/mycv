@@ -1,5 +1,7 @@
 package com.johndoe.mycv.repository.model
 
+import android.os.Parcelable
+
 data class Education(
     val area: String,
     val courses: List<String>,

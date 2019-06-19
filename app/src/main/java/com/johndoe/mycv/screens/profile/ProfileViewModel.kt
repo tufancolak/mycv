@@ -16,6 +16,7 @@ class ProfileViewModel(val repository: IRepository) : ViewModel(), ProfileContra
 
     private val resumeData = MutableLiveData<Resume>()
 
+
     init {
         showProgressView.postValue(true)
         showProfileView.postValue(false)
@@ -23,12 +24,15 @@ class ProfileViewModel(val repository: IRepository) : ViewModel(), ProfileContra
     }
 
     override fun retrieveData() {
+        showProfileView.postValue(false)
+        showErrorView.postValue(false)
         showProgressView.postValue(true)
 
         this.repository.getData().subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe(
                 { result ->
+                    repository.storeResume(result)
                     resumeData.postValue(result)
                     showProfileView.postValue(true)
                     showErrorView.postValue(false)
