@@ -38,7 +38,7 @@ interface IApi {
         }
 
         fun createGson(): Gson {
-            val builder = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            val builder = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
             return builder.setLenient().create()
         }
 

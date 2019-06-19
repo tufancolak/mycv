@@ -18,15 +18,14 @@
                     android:id="@+id/adapter_education_item_institution"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:minHeight="100dp"
+                    android:textSize="14sp"
+                    android:minHeight="80dp"
                     android:gravity="center"
-                    tools:text="University of Phonix" android:textColor="#2196F3"/>
+                    tools:text="University of Phonix" />
             <TextView
                     android:id="@+id/adapter_education_item_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:gravity="center"
                     tools:text="Area" android:minHeight="40dp" android:padding="8dp"/>
 
@@ -39,19 +38,17 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
                         android:minHeight="50dp"
                         android:gravity="center"
-                        tools:text="Start" android:textColor="#009688" android:padding="8dp"/>
+                        tools:text="Start"  android:padding="8dp"/>
                 <TextView
                         android:id="@+id/adapter_education_item_end"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="14sp"
                         android:minHeight="50dp"
                         android:gravity="center"
-                        tools:text="End" android:textColor="#FF5722" android:padding="8dp"/>
+                        tools:text="End"  android:padding="8dp"/>
 
             </LinearLayout>
 
@@ -59,8 +56,7 @@
                     android:id="@+id/adapter_education_item_study_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:minHeight="100dp"
+                    android:minHeight="64dp"
                     android:gravity="center"
                     tools:text="Study Type" android:padding="8dp"/>
         </LinearLayout>
